@@ -28,3 +28,29 @@ surprise:                    # an event is "surprising" when the bbox-only basel
   demo_fail_k: 1
 
 seeds: [0, 1, 2]
+
+train:
+  epochs: 60
+  patience: 10
+  batch_size: 128
+  lr: 0.001
+  weight_decay: 0.0001
+  intent_weight: 1.0
+
+# Every row of the results table comes from one of these. "main" uses all cue groups.
+experiments:
+  - {name: const_velocity,   type: const_velocity}
+  - {name: bbox_lstm,        type: net, groups: [bbox], fusion: concat, K: 1}
+  - {name: piepredict_style, type: net, groups: [bbox], fusion: concat, K: 1, dec_cond: true}
+  - {name: main,             type: net, groups: [bbox, pose, seg, ego, social], fusion: gated, K: 3}
+  - {name: main_k1,          type: net, groups: [bbox, pose, seg, ego, social], fusion: gated, K: 1}
+  - {name: main_no_pose,     type: net, groups: [bbox, seg, ego, social], fusion: gated, K: 3}
+  - {name: main_no_seg,      type: net, groups: [bbox, pose, ego, social], fusion: gated, K: 3}
+  - {name: main_no_ego,      type: net, groups: [bbox, pose, seg, social], fusion: gated, K: 3}
+  - {name: main_no_social,   type: net, groups: [bbox, pose, seg, ego], fusion: gated, K: 3}
+  - {name: main_gru,         type: net, groups: [bbox, pose, seg, ego, social], fusion: gated, K: 3, rnn: gru}
+  - {name: main_concat,      type: net, groups: [bbox, pose, seg, ego, social], fusion: concat, K: 3}
+  - {name: bbox_seg,         type: net, groups: [bbox, seg], fusion: gated, K: 1}
+
+# cue-group ablation used for per-event explanations: main vs main_no_<group>
+explain_groups: [pose, seg, ego, social]

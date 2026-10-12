@@ -39,10 +39,13 @@ CFG = dict(
     MATCH_IOU=0.3,
     MAP_DOWNSAMPLE=2,         # saved label map = logits resolution / 2  (128 x 72)
     OUT_DIR="/kaggle/working/cache",
+    MAX_FRAMES=0,             # >0 only for local tests
 )
 # @CFG_OVERRIDE  (the push script replaces this line with CFG.update({...}))
+CFG.update(json.loads(os.environ.get("STAGE_A_CFG", "{}")))  # set by src/pipeline.py per GPU worker
 
 ROAD, SIDEWALK = 0, 1        # Cityscapes train ids
+MAX_DIST = 10.0
 SEG_FEATURES = ["dist_road_h", "dist_sidewalk_h", "on_road", "on_sidewalk",
                 "road_frac_patch", "sidewalk_frac_patch", "road_toward_centre"]
 
@@ -52,6 +55,8 @@ def log(*a):
 
 
 def find_jaad():
+    if os.environ.get("JAAD_WORK"):           # local tests: a prepared JAAD folder
+        return os.environ["JAAD_WORK"]
     hits = glob.glob("/kaggle/input/**/JAAD/repo/jaad_data.py", recursive=True)
     if not hits:
         sys.exit("JAAD repo not found under /kaggle/input (attach the ped-intent-jaad-download output)")
@@ -98,8 +103,8 @@ def seg_features(lab, dist_road, dist_side, box, sx, sy):
     cx = w_map // 2
     row = lab[fy, min(fx, cx):max(fx, cx) + 1]
     return np.array([
-        dist_road[fy, fx] * sy / bh,                 # distance to nearest road pixel, in box heights
-        dist_side[fy, fx] * sy / bh,
+        min(dist_road[fy, fx] * sy / bh, 10.0),      # distance to nearest road pixel, in box heights
+        min(dist_side[fy, fx] * sy / bh, 10.0),      # (capped: the class may be absent from the frame)
         float(np.mean(win == ROAD) > 0.5),
         float(np.mean(win == SIDEWALK) > 0.5),
         float(np.mean(patch == ROAD)),
@@ -110,7 +115,10 @@ def seg_features(lab, dist_road, dist_side, box, sx, sy):
 
 def main():
     t0 = time.time()
-    subprocess.run("pip install -q ultralytics", shell=True, check=True)
+    try:
+        import ultralytics  # noqa: F401
+    except ImportError:
+        subprocess.run("pip install -q ultralytics", shell=True, check=True)
     import cv2
     import torch
     from transformers import SegformerForSemanticSegmentation
@@ -128,8 +136,11 @@ def main():
     todo = [v for v in vids if not os.path.exists(os.path.join(CFG["OUT_DIR"], v + ".pkl"))]
     log(f"videos: {len(vids)} total, {len(vids) - len(todo)} already done, {len(todo)} to do")
 
-    dev = "cuda"
-    seg = SegformerForSemanticSegmentation.from_pretrained(CFG["SEG_MODEL"]).to(dev).half().eval()
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    half = dev == "cuda"
+    seg = SegformerForSemanticSegmentation.from_pretrained(CFG["SEG_MODEL"]).to(dev).eval()
+    if half:
+        seg = seg.half()
     pose = YOLO(CFG["POSE_MODEL"])
     mean = torch.tensor([0.485, 0.456, 0.406], device=dev).view(1, 3, 1, 1)
     std = torch.tensor([0.229, 0.224, 0.225], device=dev).view(1, 3, 1, 1)
@@ -164,7 +175,7 @@ def main():
             frames = []
             while len(frames) < CFG["BATCH"]:
                 ok, img = cap.read()
-                if not ok:
+                if not ok or (CFG["MAX_FRAMES"] and f + len(frames) >= CFG["MAX_FRAMES"]):
                     done = True
                     break
                 frames.append(img)
@@ -173,9 +184,9 @@ def main():
             with torch.no_grad():
                 x = torch.from_numpy(np.stack([cv2.resize(im, (CFG["SEG_W"], CFG["SEG_H"]))[:, :, ::-1]
                                                for im in frames])).to(dev)
-                x = ((x.permute(0, 3, 1, 2).float() / 255 - mean) / std).half()
+                x = ((x.permute(0, 3, 1, 2).float() / 255 - mean) / std).to(next(seg.parameters()).dtype)
                 labs = seg(pixel_values=x).logits.argmax(1).to(torch.uint8).cpu().numpy()
-            res = pose.predict(frames, imgsz=CFG["POSE_IMGSZ"], conf=CFG["POSE_CONF"], half=True,
+            res = pose.predict(frames, imgsz=CFG["POSE_IMGSZ"], conf=CFG["POSE_CONF"], half=half,
                                classes=[0], verbose=False)
             H, W = frames[0].shape[:2]
             for b, (lab, r) in enumerate(zip(labs, res)):
@@ -220,7 +231,7 @@ def main():
 
     have = sorted(os.path.basename(p)[:-4] for p in glob.glob(os.path.join(CFG["OUT_DIR"], "*.pkl")))
     json.dump(dict(done=len(have), wanted=len(vids), complete=set(vids) <= set(have), timings=timings,
-                   cfg=CFG, torch=torch.__version__, gpu=torch.cuda.get_device_name(0),
+                   cfg=CFG, torch=torch.__version__, gpu=torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
                    elapsed_h=round((time.time() - t0) / 3600, 2)),
               open(os.path.join(CFG["OUT_DIR"], "..", f"stage_a_manifest_shard{CFG['SHARD']}.json"), "w"), indent=1)
     log(f"done: {len(have)}/{len(vids)} videos cached")
