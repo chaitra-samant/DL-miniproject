@@ -1,0 +1,11 @@
+# Versions observed on the Kaggle image (2026-10-12) unless noted
+torch>=2.4
+numpy
+pandas
+scikit-learn
+pyyaml
+opencv-python-headless
+transformers   # SegFormer (Cityscapes)
+ultralytics    # YOLO detection + pose, ByteTrack (not preinstalled on Kaggle)
+matplotlib
+kaggle         # local CLI only

@@ -1,0 +1,30 @@
+# JAAD experiment config. Protocol values are taken from the official code, not from memory:
+#   intent:     github.com/ykotseruba/PedestrianActionBenchmark  config_files/configs_default.yaml
+#   trajectory: github.com/aras62/PIEPredict  train_test.py (observe_length 15, predict_length 45)
+dataset: jaad
+fps: 30
+data:
+  jaad_root: /kaggle/input/ped-intent-jaad-download/JAAD   # kernel output of ped-intent-jaad-download
+  subset: default            # split_ids/default
+  sample_type: beh           # pedestrians with behaviour labels ("beh"); "all" for the larger set
+  data_split_type: default
+
+intent:                      # crossing-action prediction (Kotseruba et al., WACV 2021 benchmark)
+  obs_length: 16             # frames observed
+  time_to_event: [30, 60]    # observation ends 1-2 s (30-60 frames) before the crossing event
+  overlap: 0.8               # benchmark uses 0.8 for JAAD, 0.6 for PIE
+  min_track_size: 16
+
+trajectory:                  # PIEPredict protocol
+  obs_length: 15             # 0.5 s
+  pred_length: 45            # 1.5 s; MSE reported at 0.5 / 1.0 / 1.5 s, CMSE and CFMSE at 1.5 s
+  overlap: 0.5
+  k_hypotheses: 3            # best-of-K for the multi-modal head (main model only)
+
+surprise:                    # an event is "surprising" when the bbox-only baseline is confidently wrong
+  low: 0.3                   # baseline P(cross) < 0.3 but the pedestrian crosses
+  high: 0.7                  # baseline P(cross) > 0.7 but the pedestrian does not cross
+  demo_top_k: 3              # demo clips are the top-k mined events by margin, plus failures of our model
+  demo_fail_k: 1
+
+seeds: [0, 1, 2]

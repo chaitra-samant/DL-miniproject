@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+scratch/
+external/
+kaggle/*/out/
+data/
+cache/
+*.mp4
+*.zip

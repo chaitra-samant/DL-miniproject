@@ -1,0 +1,13 @@
+{
+  "id": "chaitrasamant/ped-intent-gpu-probe",
+  "title": "ped-intent-gpu-probe",
+  "code_file": "probe.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
