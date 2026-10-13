@@ -119,6 +119,15 @@ json.dump({"id": f"{USER}/{SLUG}", "title": SLUG, "code_file": "stage_a.py", "la
            "kernel_sources": [f"{USER}/accident-ccd-download", f"{USER}/accident-dota-stagnet-download"]
                              + [f"{USER}/{r}" for r in resume]},
           open(os.path.join(out, "kernel-metadata.json"), "w"), indent=1)
-print(f"built kaggle/stage_a/stage_a.py from commit {commit}")
+nb = {"cells": [{"cell_type": "markdown", "metadata": {}, "source": "# 01 Extract features (Stage A)
+
+YOLO11m + ByteTrack, "
+                 "SegFormer-B2 (Cityscapes) road context and DINOv2-small embeddings for every frame of CCD and DoTA. "
+                 f"Generated from repo commit `{commit}`; identical to the script kernel `{SLUG}`."},
+                {"cell_type": "code", "metadata": {}, "execution_count": None, "outputs": [], "source": script}],
+      "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}}, "nbformat": 4, "nbformat_minor": 5}
+os.makedirs(os.path.join(ROOT, "notebooks"), exist_ok=True)
+json.dump(nb, open(os.path.join(ROOT, "notebooks", "01_extract_features.ipynb"), "w"), indent=1)
+print(f"built kaggle/stage_a/stage_a.py and notebooks/01_extract_features.ipynb from commit {commit}")
 if "--push" in sys.argv:
     subprocess.run([os.path.join(ROOT, ".venv", "Scripts", "kaggle"), "kernels", "push", "-p", out], check=True)
