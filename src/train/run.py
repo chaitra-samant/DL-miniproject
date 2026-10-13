@@ -125,15 +125,33 @@ def main():
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     data = {}
     jobs = [(e, s, sp, seed) for e, s in run_list(cfg) for seed in cfg["seeds"] for sp in range(5)]
+    exps = {e["name"]: e for e in cfg["experiments"]}
+    jobs += [(exps[n], f"cross_{src}2{dst}", 0, seed) for src, dst in cfg["cross"]["directions"]
+             for n in cfg["cross"]["experiments"] for seed in cfg["seeds"]]
     k = 0
     for e, scheme, sp, seed in jobs:
-        ds = scheme.split("_")[0]
-        if ds not in data:
-            idx = loader.build_index(a.feat_dir, ds, ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
-            arrs, _ = loader.load_all(idx)
-            data[ds] = (idx, arrs)
-            json.dump(loader.leakage_report(idx), open(os.path.join(a.out, f"leakage_{ds}.json"), "w"), indent=1)
-        idx, arrs = data[ds]
+        for ds in (scheme.split("_")[1].split("2") if scheme.startswith("cross") else [scheme.split("_")[0]]):
+            if ds not in data and not (scheme.startswith("cross") and "both" in data):
+                idx = loader.build_index(a.feat_dir, ds, ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
+                arrs, _ = loader.load_all(idx)
+                data[ds] = (idx, arrs)
+                json.dump(loader.leakage_report(idx), open(os.path.join(a.out, f"leakage_{ds}.json"), "w"), indent=1)
+        if scheme.startswith("cross"):
+            if "both" not in data:   # one concatenated copy serves both directions; per-dataset copies are freed
+                (i1, a1), (i2, a2) = data.pop("ccd"), data.pop("dota")
+                arrs = {}
+                for key in list(a1):
+                    arrs[key] = np.concatenate([a1.pop(key), a2.pop(key)])
+                n1, n2 = len(i1["y"]), len(i2["y"])
+                is_ccd = np.r_[np.ones(n1, bool), np.zeros(n2, bool)]
+                idx = dict(y=np.concatenate([i1["y"], i2["y"]]), toa=np.concatenate([i1["toa"], i2["toa"]]),
+                           vids=i1["vids"] + i2["vids"],
+                           groups=dict(source=list(i1["groups"]["source"]) + list(i2["groups"]["source"])),
+                           schemes={"cross_ccd2dota": [("all", is_ccd, ~is_ccd)], "cross_dota2ccd": [("all", ~is_ccd, is_ccd)]})
+                data["both"] = (idx, arrs)
+            idx, arrs = data["both"]
+        else:
+            idx, arrs = data[scheme.split("_")[0]]
         splits = idx["schemes"][scheme]
         if sp >= len(splits):
             continue

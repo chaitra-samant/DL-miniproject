@@ -42,3 +42,8 @@ demo:
   top_k_earlier: 2      # clips with the largest earlier-warning margin of main over det_graph
   false_alarms: 1       # most confident false alarm of main on a negative video
   misses: 1             # positive video with the lowest maximum P(accident) before toa under main
+
+# cross-dataset: train on every video of one dataset, test on every video of the other
+cross:
+  experiments: [frame_lstm, det_lstm, det_graph, main]
+  directions: [[ccd, dota], [dota, ccd]]
