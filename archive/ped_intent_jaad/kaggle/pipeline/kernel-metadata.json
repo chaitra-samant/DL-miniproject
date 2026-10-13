@@ -1,6 +1,6 @@
 {
- "id": "chaitrasamant/ped-intent-pipeline-jaad",
- "title": "ped-intent-pipeline-jaad",
+ "id": "chaitrasamant/ped-intent-pipeline-jaad-v2",
+ "title": "ped-intent-pipeline-jaad-v2",
  "code_file": "pipeline_all.ipynb",
  "language": "python",
  "kernel_type": "notebook",
@@ -10,6 +10,7 @@
  "dataset_sources": [],
  "competition_sources": [],
  "kernel_sources": [
-  "chaitrasamant/ped-intent-jaad-download"
+  "chaitrasamant/ped-intent-jaad-download",
+  "chaitrasamant/ped-intent-pipeline-jaad"
  ]
 }
