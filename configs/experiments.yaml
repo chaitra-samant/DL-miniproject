@@ -1,0 +1,44 @@
+# Stage B experiments. Every row of every results table comes from a run defined here.
+seeds: [0, 1, 2]
+
+train:
+  epochs: 40
+  patience: 8          # on validation AP
+  batch_size: 32
+  lr: 0.0003
+  weight_decay: 0.0001
+  val_fraction: 0.1    # of the training videos, grouped like the split, used only for checkpoint selection
+
+# Which split schemes each experiment group runs on (configs/protocol.yaml).
+#   comparable: the protocols of the literature (CCD official split, DoTA STAGNet folds)
+#   clean:      our leakage-free splits (grouped by YouTube source)
+schemes:
+  comparable: [ccd_official, dota_stagnet]
+  clean: [ccd_source, dota_source]
+
+experiments:
+  # baselines
+  - {name: frame_lstm,      model: frame, run_on: [comparable, clean]}                                   # B1 DSA-RNN-style frame branch
+  - {name: det_lstm,        model: risknet, groups: [app, geo], interaction: none, run_on: [comparable, clean]}   # B2 detection-only, no interaction
+  - {name: det_graph,       model: risknet, groups: [app, geo], interaction: graph, run_on: [comparable, clean]}  # B3 STAGNet/Graph(Graph)-style
+  # main model: detection + segmentation context + interaction
+  - {name: main,            model: risknet, groups: [app, geo, seg], interaction: graph, run_on: [comparable, clean]}
+  # ablations (clean splits only)
+  - {name: main_no_interaction, model: risknet, groups: [app, geo, seg], interaction: none, run_on: [clean]}
+  - {name: main_no_app,     model: risknet, groups: [geo, seg], interaction: graph, run_on: [clean]}
+  - {name: main_no_geo,     model: risknet, groups: [app, seg], interaction: graph, run_on: [clean]}
+  - {name: main_no_frame,   model: risknet, groups: [app, geo, seg], interaction: graph, use_frame: false, run_on: [clean]}
+  - {name: main_gru,        model: risknet, groups: [app, geo, seg], interaction: graph, rnn: gru, run_on: [clean]}
+  - {name: geo_only,        model: risknet, groups: [geo], interaction: graph, run_on: [clean]}
+  - {name: geo_seg,         model: risknet, groups: [geo, seg], interaction: graph, run_on: [clean]}
+
+# "early vs late": main vs det_graph (identical architecture without segmentation context)
+early_late:
+  threshold: 0.5        # alarm when P(accident) >= 0.5
+  tie_seconds: 0.1      # one frame at 10 fps; differences up to this count as "same time"
+  scheme: [ccd_source, dota_source]
+
+demo:
+  top_k_earlier: 2      # clips with the largest earlier-warning margin of main over det_graph
+  false_alarms: 1       # most confident false alarm of main on a negative video
+  misses: 1             # positive video with the lowest maximum P(accident) before toa under main

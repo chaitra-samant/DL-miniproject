@@ -1,0 +1,16 @@
+{
+ "id": "chaitrasamant/accident-stage-a",
+ "title": "accident-stage-a",
+ "code_file": "stage_a.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "dataset_sources": [],
+ "competition_sources": [],
+ "kernel_sources": [
+  "chaitrasamant/accident-ccd-download",
+  "chaitrasamant/accident-dota-stagnet-download"
+ ]
+}
