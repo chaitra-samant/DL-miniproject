@@ -1,0 +1,892 @@
+{
+ "done": 346,
+ "wanted": 173,
+ "complete": true,
+ "timings": {
+  "video_0001": {
+   "sec": 54.0,
+   "frames": 600,
+   "fps": 11.1
+  },
+  "video_0003": {
+   "sec": 19.1,
+   "frames": 210,
+   "fps": 11.0
+  },
+  "video_0005": {
+   "sec": 19.6,
+   "frames": 240,
+   "fps": 12.2
+  },
+  "video_0007": {
+   "sec": 10.3,
+   "frames": 120,
+   "fps": 11.7
+  },
+  "video_0009": {
+   "sec": 10.2,
+   "frames": 120,
+   "fps": 11.8
+  },
+  "video_0011": {
+   "sec": 25.0,
+   "frames": 270,
+   "fps": 10.8
+  },
+  "video_0013": {
+   "sec": 12.0,
+   "frames": 150,
+   "fps": 12.5
+  },
+  "video_0015": {
+   "sec": 36.7,
+   "frames": 420,
+   "fps": 11.5
+  },
+  "video_0017": {
+   "sec": 22.2,
+   "frames": 270,
+   "fps": 12.2
+  },
+  "video_0019": {
+   "sec": 39.5,
+   "frames": 480,
+   "fps": 12.2
+  },
+  "video_0021": {
+   "sec": 15.0,
+   "frames": 180,
+   "fps": 12.0
+  },
+  "video_0023": {
+   "sec": 19.8,
+   "frames": 240,
+   "fps": 12.2
+  },
+  "video_0025": {
+   "sec": 17.2,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0027": {
+   "sec": 12.6,
+   "frames": 150,
+   "fps": 11.9
+  },
+  "video_0029": {
+   "sec": 45.6,
+   "frames": 570,
+   "fps": 12.5
+  },
+  "video_0031": {
+   "sec": 24.9,
+   "frames": 300,
+   "fps": 12.1
+  },
+  "video_0033": {
+   "sec": 16.7,
+   "frames": 210,
+   "fps": 12.6
+  },
+  "video_0035": {
+   "sec": 14.9,
+   "frames": 180,
+   "fps": 12.1
+  },
+  "video_0037": {
+   "sec": 24.6,
+   "frames": 300,
+   "fps": 12.2
+  },
+  "video_0039": {
+   "sec": 30.8,
+   "frames": 360,
+   "fps": 11.7
+  },
+  "video_0041": {
+   "sec": 29.0,
+   "frames": 360,
+   "fps": 12.4
+  },
+  "video_0043": {
+   "sec": 36.2,
+   "frames": 450,
+   "fps": 12.4
+  },
+  "video_0045": {
+   "sec": 12.3,
+   "frames": 150,
+   "fps": 12.2
+  },
+  "video_0047": {
+   "sec": 12.2,
+   "frames": 150,
+   "fps": 12.3
+  },
+  "video_0049": {
+   "sec": 22.1,
+   "frames": 270,
+   "fps": 12.2
+  },
+  "video_0051": {
+   "sec": 21.7,
+   "frames": 270,
+   "fps": 12.5
+  },
+  "video_0053": {
+   "sec": 20.1,
+   "frames": 240,
+   "fps": 11.9
+  },
+  "video_0055": {
+   "sec": 17.1,
+   "frames": 210,
+   "fps": 12.3
+  },
+  "video_0057": {
+   "sec": 19.5,
+   "frames": 240,
+   "fps": 12.3
+  },
+  "video_0059": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0061": {
+   "sec": 13.9,
+   "frames": 180,
+   "fps": 12.9
+  },
+  "video_0063": {
+   "sec": 14.0,
+   "frames": 180,
+   "fps": 12.9
+  },
+  "video_0065": {
+   "sec": 13.8,
+   "frames": 180,
+   "fps": 13.1
+  },
+  "video_0067": {
+   "sec": 18.5,
+   "frames": 240,
+   "fps": 13.0
+  },
+  "video_0069": {
+   "sec": 9.3,
+   "frames": 120,
+   "fps": 12.8
+  },
+  "video_0071": {
+   "sec": 27.3,
+   "frames": 330,
+   "fps": 12.1
+  },
+  "video_0073": {
+   "sec": 10.0,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0075": {
+   "sec": 17.6,
+   "frames": 210,
+   "fps": 11.9
+  },
+  "video_0077": {
+   "sec": 14.8,
+   "frames": 180,
+   "fps": 12.2
+  },
+  "video_0079": {
+   "sec": 19.9,
+   "frames": 240,
+   "fps": 12.0
+  },
+  "video_0081": {
+   "sec": 12.9,
+   "frames": 150,
+   "fps": 11.7
+  },
+  "video_0083": {
+   "sec": 19.9,
+   "frames": 240,
+   "fps": 12.1
+  },
+  "video_0085": {
+   "sec": 22.3,
+   "frames": 270,
+   "fps": 12.1
+  },
+  "video_0087": {
+   "sec": 23.7,
+   "frames": 282,
+   "fps": 11.9
+  },
+  "video_0089": {
+   "sec": 30.3,
+   "frames": 360,
+   "fps": 11.9
+  },
+  "video_0091": {
+   "sec": 15.3,
+   "frames": 180,
+   "fps": 11.7
+  },
+  "video_0093": {
+   "sec": 25.4,
+   "frames": 300,
+   "fps": 11.8
+  },
+  "video_0095": {
+   "sec": 20.5,
+   "frames": 240,
+   "fps": 11.7
+  },
+  "video_0097": {
+   "sec": 19.8,
+   "frames": 240,
+   "fps": 12.1
+  },
+  "video_0099": {
+   "sec": 15.0,
+   "frames": 180,
+   "fps": 12.0
+  },
+  "video_0101": {
+   "sec": 29.6,
+   "frames": 360,
+   "fps": 12.2
+  },
+  "video_0103": {
+   "sec": 30.2,
+   "frames": 360,
+   "fps": 11.9
+  },
+  "video_0105": {
+   "sec": 29.8,
+   "frames": 360,
+   "fps": 12.1
+  },
+  "video_0107": {
+   "sec": 14.9,
+   "frames": 180,
+   "fps": 12.1
+  },
+  "video_0109": {
+   "sec": 30.0,
+   "frames": 360,
+   "fps": 12.0
+  },
+  "video_0111": {
+   "sec": 22.8,
+   "frames": 270,
+   "fps": 11.9
+  },
+  "video_0113": {
+   "sec": 20.1,
+   "frames": 240,
+   "fps": 11.9
+  },
+  "video_0115": {
+   "sec": 37.8,
+   "frames": 450,
+   "fps": 11.9
+  },
+  "video_0117": {
+   "sec": 50.7,
+   "frames": 600,
+   "fps": 11.8
+  },
+  "video_0119": {
+   "sec": 17.8,
+   "frames": 210,
+   "fps": 11.8
+  },
+  "video_0121": {
+   "sec": 29.1,
+   "frames": 360,
+   "fps": 12.4
+  },
+  "video_0123": {
+   "sec": 12.5,
+   "frames": 150,
+   "fps": 12.0
+  },
+  "video_0125": {
+   "sec": 20.2,
+   "frames": 240,
+   "fps": 11.9
+  },
+  "video_0127": {
+   "sec": 30.2,
+   "frames": 360,
+   "fps": 11.9
+  },
+  "video_0129": {
+   "sec": 12.5,
+   "frames": 150,
+   "fps": 12.0
+  },
+  "video_0131": {
+   "sec": 20.6,
+   "frames": 240,
+   "fps": 11.7
+  },
+  "video_0133": {
+   "sec": 18.2,
+   "frames": 210,
+   "fps": 11.5
+  },
+  "video_0135": {
+   "sec": 44.4,
+   "frames": 510,
+   "fps": 11.5
+  },
+  "video_0137": {
+   "sec": 17.6,
+   "frames": 210,
+   "fps": 12.0
+  },
+  "video_0139": {
+   "sec": 17.7,
+   "frames": 210,
+   "fps": 11.8
+  },
+  "video_0141": {
+   "sec": 12.5,
+   "frames": 150,
+   "fps": 12.0
+  },
+  "video_0143": {
+   "sec": 24.9,
+   "frames": 300,
+   "fps": 12.0
+  },
+  "video_0145": {
+   "sec": 25.8,
+   "frames": 300,
+   "fps": 11.6
+  },
+  "video_0147": {
+   "sec": 30.1,
+   "frames": 360,
+   "fps": 11.9
+  },
+  "video_0149": {
+   "sec": 25.6,
+   "frames": 300,
+   "fps": 11.7
+  },
+  "video_0151": {
+   "sec": 22.5,
+   "frames": 270,
+   "fps": 12.0
+  },
+  "video_0153": {
+   "sec": 27.7,
+   "frames": 330,
+   "fps": 11.9
+  },
+  "video_0155": {
+   "sec": 17.4,
+   "frames": 210,
+   "fps": 12.1
+  },
+  "video_0157": {
+   "sec": 7.5,
+   "frames": 90,
+   "fps": 11.9
+  },
+  "video_0159": {
+   "sec": 19.5,
+   "frames": 240,
+   "fps": 12.3
+  },
+  "video_0161": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0163": {
+   "sec": 17.5,
+   "frames": 210,
+   "fps": 12.0
+  },
+  "video_0165": {
+   "sec": 22.4,
+   "frames": 270,
+   "fps": 12.0
+  },
+  "video_0167": {
+   "sec": 12.3,
+   "frames": 150,
+   "fps": 12.2
+  },
+  "video_0169": {
+   "sec": 14.8,
+   "frames": 180,
+   "fps": 12.2
+  },
+  "video_0171": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0173": {
+   "sec": 12.6,
+   "frames": 150,
+   "fps": 11.9
+  },
+  "video_0175": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0177": {
+   "sec": 25.4,
+   "frames": 300,
+   "fps": 11.8
+  },
+  "video_0179": {
+   "sec": 27.3,
+   "frames": 330,
+   "fps": 12.1
+  },
+  "video_0181": {
+   "sec": 7.4,
+   "frames": 90,
+   "fps": 12.2
+  },
+  "video_0183": {
+   "sec": 22.1,
+   "frames": 270,
+   "fps": 12.2
+  },
+  "video_0185": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0187": {
+   "sec": 20.0,
+   "frames": 240,
+   "fps": 12.0
+  },
+  "video_0189": {
+   "sec": 10.1,
+   "frames": 120,
+   "fps": 11.9
+  },
+  "video_0191": {
+   "sec": 12.5,
+   "frames": 150,
+   "fps": 12.0
+  },
+  "video_0193": {
+   "sec": 19.5,
+   "frames": 240,
+   "fps": 12.3
+  },
+  "video_0195": {
+   "sec": 7.4,
+   "frames": 90,
+   "fps": 12.1
+  },
+  "video_0197": {
+   "sec": 19.8,
+   "frames": 240,
+   "fps": 12.1
+  },
+  "video_0199": {
+   "sec": 77.4,
+   "frames": 930,
+   "fps": 12.0
+  },
+  "video_0201": {
+   "sec": 12.1,
+   "frames": 150,
+   "fps": 12.4
+  },
+  "video_0203": {
+   "sec": 9.8,
+   "frames": 120,
+   "fps": 12.3
+  },
+  "video_0205": {
+   "sec": 16.9,
+   "frames": 210,
+   "fps": 12.4
+  },
+  "video_0207": {
+   "sec": 5.0,
+   "frames": 60,
+   "fps": 12.1
+  },
+  "video_0209": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0211": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0213": {
+   "sec": 29.4,
+   "frames": 360,
+   "fps": 12.2
+  },
+  "video_0215": {
+   "sec": 25.0,
+   "frames": 300,
+   "fps": 12.0
+  },
+  "video_0217": {
+   "sec": 19.8,
+   "frames": 240,
+   "fps": 12.1
+  },
+  "video_0219": {
+   "sec": 20.3,
+   "frames": 240,
+   "fps": 11.8
+  },
+  "video_0221": {
+   "sec": 22.7,
+   "frames": 270,
+   "fps": 11.9
+  },
+  "video_0223": {
+   "sec": 35.6,
+   "frames": 420,
+   "fps": 11.8
+  },
+  "video_0225": {
+   "sec": 17.9,
+   "frames": 210,
+   "fps": 11.8
+  },
+  "video_0227": {
+   "sec": 15.2,
+   "frames": 180,
+   "fps": 11.8
+  },
+  "video_0229": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0231": {
+   "sec": 22.8,
+   "frames": 270,
+   "fps": 11.8
+  },
+  "video_0233": {
+   "sec": 23.2,
+   "frames": 270,
+   "fps": 11.6
+  },
+  "video_0235": {
+   "sec": 20.0,
+   "frames": 240,
+   "fps": 12.0
+  },
+  "video_0237": {
+   "sec": 15.1,
+   "frames": 180,
+   "fps": 11.9
+  },
+  "video_0239": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0241": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0243": {
+   "sec": 14.8,
+   "frames": 180,
+   "fps": 12.2
+  },
+  "video_0245": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.2
+  },
+  "video_0247": {
+   "sec": 17.2,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0249": {
+   "sec": 10.3,
+   "frames": 120,
+   "fps": 11.7
+  },
+  "video_0251": {
+   "sec": 17.7,
+   "frames": 210,
+   "fps": 11.9
+  },
+  "video_0253": {
+   "sec": 15.1,
+   "frames": 180,
+   "fps": 11.9
+  },
+  "video_0255": {
+   "sec": 25.2,
+   "frames": 300,
+   "fps": 11.9
+  },
+  "video_0257": {
+   "sec": 17.2,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0259": {
+   "sec": 12.5,
+   "frames": 150,
+   "fps": 12.0
+  },
+  "video_0261": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0263": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0265": {
+   "sec": 12.6,
+   "frames": 150,
+   "fps": 11.9
+  },
+  "video_0267": {
+   "sec": 20.3,
+   "frames": 240,
+   "fps": 11.8
+  },
+  "video_0269": {
+   "sec": 32.1,
+   "frames": 390,
+   "fps": 12.1
+  },
+  "video_0271": {
+   "sec": 22.3,
+   "frames": 270,
+   "fps": 12.1
+  },
+  "video_0273": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0275": {
+   "sec": 12.3,
+   "frames": 150,
+   "fps": 12.2
+  },
+  "video_0277": {
+   "sec": 27.2,
+   "frames": 330,
+   "fps": 12.1
+  },
+  "video_0279": {
+   "sec": 12.8,
+   "frames": 150,
+   "fps": 11.8
+  },
+  "video_0281": {
+   "sec": 19.6,
+   "frames": 240,
+   "fps": 12.2
+  },
+  "video_0283": {
+   "sec": 7.7,
+   "frames": 90,
+   "fps": 11.7
+  },
+  "video_0285": {
+   "sec": 14.6,
+   "frames": 180,
+   "fps": 12.3
+  },
+  "video_0287": {
+   "sec": 15.3,
+   "frames": 180,
+   "fps": 11.7
+  },
+  "video_0289": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0291": {
+   "sec": 17.3,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0293": {
+   "sec": 22.9,
+   "frames": 270,
+   "fps": 11.8
+  },
+  "video_0295": {
+   "sec": 27.2,
+   "frames": 330,
+   "fps": 12.1
+  },
+  "video_0297": {
+   "sec": 32.1,
+   "frames": 390,
+   "fps": 12.1
+  },
+  "video_0299": {
+   "sec": 15.3,
+   "frames": 180,
+   "fps": 11.8
+  },
+  "video_0301": {
+   "sec": 17.3,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0303": {
+   "sec": 14.8,
+   "frames": 180,
+   "fps": 12.2
+  },
+  "video_0305": {
+   "sec": 12.9,
+   "frames": 150,
+   "fps": 11.7
+  },
+  "video_0307": {
+   "sec": 22.9,
+   "frames": 270,
+   "fps": 11.8
+  },
+  "video_0309": {
+   "sec": 7.5,
+   "frames": 90,
+   "fps": 12.0
+  },
+  "video_0311": {
+   "sec": 12.4,
+   "frames": 150,
+   "fps": 12.1
+  },
+  "video_0313": {
+   "sec": 50.3,
+   "frames": 600,
+   "fps": 11.9
+  },
+  "video_0315": {
+   "sec": 17.4,
+   "frames": 210,
+   "fps": 12.1
+  },
+  "video_0317": {
+   "sec": 22.2,
+   "frames": 270,
+   "fps": 12.2
+  },
+  "video_0319": {
+   "sec": 9.9,
+   "frames": 120,
+   "fps": 12.1
+  },
+  "video_0321": {
+   "sec": 10.0,
+   "frames": 120,
+   "fps": 12.0
+  },
+  "video_0323": {
+   "sec": 19.6,
+   "frames": 240,
+   "fps": 12.3
+  },
+  "video_0325": {
+   "sec": 12.2,
+   "frames": 150,
+   "fps": 12.3
+  },
+  "video_0327": {
+   "sec": 12.9,
+   "frames": 150,
+   "fps": 11.6
+  },
+  "video_0329": {
+   "sec": 27.2,
+   "frames": 330,
+   "fps": 12.1
+  },
+  "video_0331": {
+   "sec": 24.8,
+   "frames": 300,
+   "fps": 12.1
+  },
+  "video_0333": {
+   "sec": 17.2,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0335": {
+   "sec": 17.2,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0337": {
+   "sec": 10.1,
+   "frames": 120,
+   "fps": 11.9
+  },
+  "video_0339": {
+   "sec": 17.2,
+   "frames": 210,
+   "fps": 12.2
+  },
+  "video_0341": {
+   "sec": 25.2,
+   "frames": 300,
+   "fps": 11.9
+  },
+  "video_0343": {
+   "sec": 58.0,
+   "frames": 720,
+   "fps": 12.4
+  },
+  "video_0345": {
+   "sec": 11.9,
+   "frames": 150,
+   "fps": 12.6
+  }
+ },
+ "cfg": {
+  "SMOKE_VIDEOS": [],
+  "SHARD": 0,
+  "NUM_SHARDS": 2,
+  "TIME_BUDGET_H": 5.5,
+  "BATCH": 8,
+  "SEG_MODEL": "nvidia/segformer-b2-finetuned-cityscapes-1024-1024",
+  "SEG_W": 1024,
+  "SEG_H": 576,
+  "POSE_MODEL": "/kaggle/tmp/code/yolo11m-pose.pt",
+  "POSE_IMGSZ": 1280,
+  "POSE_CONF": 0.2,
+  "MATCH_IOU": 0.3,
+  "MAP_DOWNSAMPLE": 2,
+  "OUT_DIR": "/kaggle/working/cache",
+  "MAX_FRAMES": 0
+ },
+ "torch": "2.11.0+cu128",
+ "gpu": "Tesla T4",
+ "elapsed_h": 0.96
+}

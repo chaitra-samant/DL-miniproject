@@ -1,0 +1,16 @@
+vid,pid,first_frame,last_frame,tte,y,p,correct,vehicle,crosswalk,height_px,height_bin,confidence
+video_0093,0_93_511b,65,80,30,1,0.010588441,False,decelerating,False,475.0,>200,0.48941156
+video_0101,0_101_559b,152,167,42,1,0.010682474,False,decelerating,False,505.0,>200,0.48931754
+video_0101,0_101_559b,155,170,39,1,0.011208046,False,decelerating,False,508.0,>200,0.48879194
+video_0101,0_101_559b,158,173,36,1,0.011933935,False,decelerating,False,510.0,>200,0.48806608
+video_0053,0_53_231b,182,197,36,1,0.012442102,False,accelerating,False,310.0,>200,0.4875579
+video_0053,0_53_231b,185,200,33,1,0.013786107,False,accelerating,False,327.0,>200,0.4862139
+video_0101,0_101_559b,149,164,45,1,0.013816998,False,decelerating,False,501.0,>200,0.486183
+video_0053,0_53_231b,176,191,42,1,0.014096893,False,accelerating,False,287.0,>200,0.4859031
+video_0152,0_152_1018b,0,15,48,0,0.98586935,False,accelerating,True,95.0,50-100,0.48586935
+video_0053,0_53_231b,173,188,45,1,0.014541854,False,accelerating,False,275.0,>200,0.48545814
+video_0287,0_287_2233b,26,41,33,1,0.014946625,False,decelerating,True,375.0,>200,0.48505336
+video_0053,0_53_231b,179,194,39,1,0.015359607,False,accelerating,False,294.0,>200,0.4846404
+video_0152,0_152_1010b,43,58,60,0,0.98450947,False,decelerating,False,144.99994,100-200,0.48450947
+video_0152,0_152_1010b,55,70,48,0,0.984334,False,decelerating,False,165.0,100-200,0.484334
+video_0152,0_152_1010b,52,67,51,0,0.9843243,False,decelerating,False,160.0,100-200,0.48432428

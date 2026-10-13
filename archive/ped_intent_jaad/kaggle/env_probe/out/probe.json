@@ -1,0 +1,15 @@
+{
+ "python": "3.13.15",
+ "gpu": "",
+ "torch": "2.11.0+cpu",
+ "cuda": false,
+ "ultralytics": "missing (ModuleNotFoundError)",
+ "transformers": "5.16.1",
+ "cv2": "4.14.0",
+ "timm": "1.0.29",
+ "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+ "working_free_gb": 20.9,
+ "yorku": 200,
+ "github": 200,
+ "hf": 200
+}

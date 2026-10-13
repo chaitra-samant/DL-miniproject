@@ -1,0 +1,12 @@
+model,surprising_windows,surprising_tracks,hit_rate_mean,hit_rate_std,hit_rate_seed_mean_prob,accuracy_all_windows
+bbox_lstm,248,40,0.001,0.002,0.0,0.589
+piepredict_style,248,40,0.004,0.006,0.0,0.594
+main,248,40,0.489,0.149,0.5,0.622
+main_k1,248,40,0.626,0.051,0.617,0.668
+main_no_pose,248,40,0.198,0.113,0.173,0.553
+main_no_seg,248,40,0.489,0.08,0.548,0.631
+main_no_ego,248,40,0.304,0.205,0.355,0.56
+main_no_social,248,40,0.272,0.191,0.121,0.611
+main_gru,248,40,0.37,0.084,0.351,0.592
+main_concat,248,40,0.477,0.112,0.492,0.659
+bbox_seg,248,40,0.358,0.079,0.319,0.652

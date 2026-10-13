@@ -1,0 +1,8 @@
+{
+ "n_clips": 346,
+ "first": [
+  "/kaggle/working/JAAD/JAAD_clips/video_0001.mp4",
+  "/kaggle/working/JAAD/JAAD_clips/video_0002.mp4"
+ ],
+ "source": "https://data.nvision2.eecs.yorku.ca/JAAD_dataset/data/JAAD_clips.zip"
+}

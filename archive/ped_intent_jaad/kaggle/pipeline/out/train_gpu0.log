@@ -1,0 +1,16 @@
+[ 0.01 h]   bbox_lstm seed 1: 11 epochs, AUC 0.582, F1 0.724, MSE@45 7716, 24s
+[ 0.01 h]   piepredict_style seed 0: 11 epochs, AUC 0.576, F1 0.686, MSE@45 7628, 24s
+[ 0.02 h]   piepredict_style seed 2: 11 epochs, AUC 0.569, F1 0.639, MSE@45 7678, 24s
+[ 0.03 h]   main seed 1: 12 epochs, AUC 0.689, F1 0.761, MSE@45 7736, 30s
+[ 0.04 h]   main_k1 seed 0: 11 epochs, AUC 0.646, F1 0.785, MSE@45 7652, 28s
+[ 0.05 h]   main_k1 seed 2: 11 epochs, AUC 0.667, F1 0.757, MSE@45 7700, 27s
+[ 0.05 h]   main_no_pose seed 1: 11 epochs, AUC 0.649, F1 0.540, MSE@45 7748, 27s
+[ 0.06 h]   main_no_seg seed 0: 11 epochs, AUC 0.649, F1 0.711, MSE@45 7653, 27s
+[ 0.07 h]   main_no_seg seed 2: 11 epochs, AUC 0.582, F1 0.729, MSE@45 7661, 28s
+[ 0.08 h]   main_no_ego seed 1: 11 epochs, AUC 0.543, F1 0.508, MSE@45 7630, 28s
+[ 0.08 h]   main_no_social seed 0: 11 epochs, AUC 0.576, F1 0.668, MSE@45 7620, 28s
+[ 0.09 h]   main_no_social seed 2: 11 epochs, AUC 0.598, F1 0.685, MSE@45 7832, 27s
+[ 0.10 h]   main_gru seed 1: 11 epochs, AUC 0.648, F1 0.659, MSE@45 7525, 28s
+[ 0.11 h]   main_concat seed 0: 11 epochs, AUC 0.567, F1 0.794, MSE@45 7633, 28s
+[ 0.12 h]   main_concat seed 2: 11 epochs, AUC 0.622, F1 0.717, MSE@45 7655, 28s
+[ 0.12 h]   bbox_seg seed 1: 12 epochs, AUC 0.662, F1 0.736, MSE@45 7705, 27s

@@ -1,0 +1,14 @@
+| experiment       |   seeds | best3_mse_45   | best3_ade   | best3_fde   |
+|:-----------------|--------:|:---------------|:------------|:------------|
+| const_velocity   |       1 | n/a            | n/a         | n/a         |
+| bbox_lstm        |       3 | n/a            | n/a         | n/a         |
+| piepredict_style |       3 | n/a            | n/a         | n/a         |
+| main             |       3 | 2802 ± 233     | 46 ± 3      | 90 ± 5      |
+| main_k1          |       3 | n/a            | n/a         | n/a         |
+| main_no_pose     |       3 | 3000 ± 57      | 49 ± 1      | 94 ± 0      |
+| main_no_seg      |       3 | 3022 ± 62      | 49 ± 1      | 95 ± 1      |
+| main_no_ego      |       3 | 3022 ± 105     | 48 ± 1      | 95 ± 1      |
+| main_no_social   |       3 | 3020 ± 113     | 48 ± 1      | 94 ± 2      |
+| main_gru         |       3 | 3025 ± 141     | 48 ± 0      | 94 ± 2      |
+| main_concat      |       3 | 3004 ± 114     | 49 ± 0      | 94 ± 2      |
+| bbox_seg         |       3 | n/a            | n/a         | n/a         |

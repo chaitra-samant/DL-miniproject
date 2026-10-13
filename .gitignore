@@ -7,3 +7,10 @@ data/
 cache/
 *.mp4
 *.zip
+
+# never commit data or model artefacts
+*.pkl
+*.pt
+*.npz
+*.npy
+archive/**/out/cache/

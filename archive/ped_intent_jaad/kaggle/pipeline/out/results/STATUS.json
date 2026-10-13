@@ -1,0 +1,27 @@
+{
+ "started": "2026-10-12 18:37:29",
+ "stage_a": {
+  "cached": 346,
+  "wanted": 346,
+  "complete": true,
+  "returncodes": [
+   0,
+   0
+  ]
+ },
+ "stage_a_ok": true,
+ "samples_ok": true,
+ "train": {
+  "runs_done": 34,
+  "runs_wanted": 34
+ },
+ "train_ok": true,
+ "analysis_ok": true,
+ "mining_ok": true,
+ "demo": {
+  "clips": 4
+ },
+ "demo_ok": true,
+ "finished": "2026-10-12 19:45:33",
+ "elapsed_h": 1.13
+}

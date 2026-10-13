@@ -1,0 +1,14 @@
+factor,value,windows,accuracy
+vehicle,accelerating,640,0.645
+vehicle,decelerating,1213,0.672
+vehicle,moving_fast,3,1.0
+vehicle,moving_slow,3,1.0
+vehicle,stopped,235,0.838
+crosswalk,False,777,0.645
+crosswalk,True,1317,0.706
+height_bin,<50,42,1.0
+height_bin,50-100,260,0.646
+height_bin,100-200,865,0.614
+height_bin,>200,927,0.744
+y,0,759,0.377
+y,1,1335,0.858
