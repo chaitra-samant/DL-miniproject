@@ -16,3 +16,6 @@ cache/
 archive/**/out/cache/
 .tmp/
 papers/
+scratch_hf/
+*.safetensors
+*.bin

@@ -1,0 +1,11 @@
+torch
+numpy
+pandas
+scikit-learn
+pyyaml
+opencv-python-headless
+transformers   # SegFormer-B2 (Cityscapes), DINOv2-small
+ultralytics    # YOLO11m + ByteTrack
+matplotlib
+gdown
+kaggle         # local CLI only

@@ -1,0 +1,3 @@
+{"id": "chaitrasamant/accident-dota-stagnet-download", "title": "accident-dota-stagnet-download", "code_file": "download.py",
+ "language": "python", "kernel_type": "script", "is_private": true, "enable_gpu": false, "enable_internet": true,
+ "dataset_sources": [], "competition_sources": [], "kernel_sources": []}

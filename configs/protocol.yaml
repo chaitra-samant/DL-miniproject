@@ -1,0 +1,39 @@
+# Datasets and evaluation protocol. Every count below was measured from the downloaded files
+# (kaggle/*_download MANIFEST.json) or from the official annotation files, on 2026-10-13.
+
+fps: 10
+clip_frames: 50
+
+datasets:
+  ccd:
+    source: github.com/Cogito2012/CarCrashDataset (Google Drive), Bao et al., ACM MM 2020
+    videos: {positive: 1500, negative: 3000}       # Crash-1500 (YouTube), Normal (BDD100K); 50 frames at 10 fps
+    toa: first frame labelled 1 in Crash-1500.txt   # measured range 30..49
+    splits:
+      official: vgg16_features/train.txt (3600) and test.txt (900)
+      source_grouped: 5-fold, positives grouped by YouTube source id (Crash-1500.txt field 4); negatives random
+    leakage_found: 299 of 300 official test positives share a YouTube source with training positives;
+                   negatives come from a different source (BDD100K) than positives (YouTube)
+
+  dota:
+    source: STAGNet release "DoTA Videos.rar" (github.com/Vipooshan1998/STAGNet) built from DoTA
+            (Yao et al., TPAMI 2023) by STAGNet's generate_videos_for_stagnet.py
+    videos: {positive: 745, negative: 745}         # ego-involved accidents; 50 frames at 10 fps, 1280x720
+    toa: STAGNet rule from DoTA anomaly_start      # 507 clips toa=30, 217 below 30, 21 above 30
+    negatives: post-accident windows (frames after anomaly_end) of DoTA clips ("-neg-2-" files)
+    splits:
+      stagnet: 5-fold GroupKFold grouped by DoTA clip (as STAGNet cross_validate.py)
+      source_grouped: 5-fold GroupKFold grouped by YouTube source id (clip name prefix)
+    leakage_found: 122 of 173 YouTube sources appear in both STAGNet training and testing folders
+
+metrics:
+  # evaluation() from UString / STAGNet eval_utils.py: thresholds from min(pred) to 1 in steps of 0.001
+  ap: precision-recall over videos (a video is a positive prediction if any frame before toa exceeds the threshold)
+  mtta: mean over thresholds of the mean time-to-accident of true-positive videos (seconds)
+  tta_r80: time-to-accident at recall 0.8
+  sweep: TTA and precision/recall per threshold are also saved for the threshold-sweep figure
+
+loss:
+  # verified in UString src/Models.py _exp_loss and DSA-RNN accident.py:
+  # positive frame t: exp(-max(0, (toa - t - 1) / fps)) * CE(p_t, 1); negative frame: CE(p_t, 0)
+  type: exponential
