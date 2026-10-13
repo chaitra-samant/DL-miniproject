@@ -1,0 +1,26 @@
+{
+ "stats": {
+  "train": {
+   "intent_windows": 2326,
+   "intent_pos": 1926,
+   "intent_tracks": 223,
+   "traj_windows": 4439,
+   "traj_tracks": 984
+  },
+  "val": {
+   "intent_windows": 269,
+   "intent_pos": 199,
+   "intent_tracks": 27,
+   "traj_windows": 736,
+   "traj_tracks": 153
+  },
+  "test": {
+   "intent_windows": 2094,
+   "intent_pos": 1335,
+   "intent_tracks": 206,
+   "traj_windows": 3555,
+   "traj_tracks": 772
+  }
+ },
+ "missing_videos": []
+}
