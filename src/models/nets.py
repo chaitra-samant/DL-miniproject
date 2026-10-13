@@ -91,6 +91,6 @@ class CueNet(nn.Module):
         return res
 
 
-def build_model(spec, dims):
+def build_model(spec, dims, dropout=0.2):
     return CueNet(dims, spec["groups"], rnn=spec.get("rnn", "lstm"), fusion=spec.get("fusion", "gated"),
-                  K=spec.get("K", 1), dec_cond=spec.get("dec_cond", False))
+                  K=spec.get("K", 1), dec_cond=spec.get("dec_cond", False), dropout=dropout)

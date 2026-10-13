@@ -30,8 +30,10 @@ surprise:                    # an event is "surprising" when the bbox-only basel
 seeds: [0, 1, 2]
 
 train:
-  epochs: 60
-  patience: 10
+  epochs: 80
+  min_epochs: 30       # the trajectory decoder can sit on the "no motion" solution for 10+ epochs first
+  patience: 15         # per task: training stops when neither val trajectory loss nor val intent AUC improved
+  dropout: 0.2
   batch_size: 128
   lr: 0.001
   weight_decay: 0.0001
@@ -39,6 +41,7 @@ train:
 
 # Every row of the results table comes from one of these. "main" uses all cue groups.
 experiments:
+  - {name: majority,         type: majority}          # intent reference: always "crossing"
   - {name: const_velocity,   type: const_velocity}
   - {name: bbox_lstm,        type: net, groups: [bbox], fusion: concat, K: 1}
   - {name: piepredict_style, type: net, groups: [bbox], fusion: concat, K: 1, dec_cond: true}

@@ -34,10 +34,12 @@ def load_models(runs_dir, exp, dev):
     for f in sorted(glob.glob(os.path.join(runs_dir, f"{exp}_s*", "model.pt"))):
         ck = torch.load(f, map_location=dev, weights_only=False)
         s = ck["spec"]
-        m = CueNet(ck["dims"], s["groups"], rnn=s.get("rnn", "lstm"), fusion=s.get("fusion", "gated"),
-                   K=s.get("K", 1), dec_cond=s.get("dec_cond", False)).to(dev).eval()
-        m.load_state_dict(ck["state"])
-        ms.append((m, ck["norm"], sorted(set(s["groups"]) | {"ego"})))
+        make = lambda: CueNet(ck["dims"], s["groups"], rnn=s.get("rnn", "lstm"), fusion=s.get("fusion", "gated"),
+                              K=s.get("K", 1), dec_cond=s.get("dec_cond", False)).to(dev).eval()
+        m_int, m_traj = make(), make()          # weights selected on val intent AUC / val trajectory loss
+        m_int.load_state_dict(ck.get("intent_state", ck["state"]))
+        m_traj.load_state_dict(ck["state"])
+        ms.append((m_int, m_traj, ck["norm"], sorted(set(s["groups"]) | {"ego"})))
     return ms
 
 
@@ -45,11 +47,11 @@ def run_models(ms, feats, dev, traj=False):
     """feats: dict group -> (N, T, d). Returns mean P over seeds, and seed-0 trajectory output."""
     ps, tr = [], None
     with torch.no_grad():
-        for i, (m, st, gs) in enumerate(ms):
+        for i, (m_int, m_traj, st, gs) in enumerate(ms):
             x = {g: torch.from_numpy((feats[g] - st[g][0]) / st[g][1]).float().to(dev) for g in gs}
-            o = m(x, traj=traj and i == 0)
-            ps.append(torch.sigmoid(o["logit"]).cpu().numpy())
+            ps.append(torch.sigmoid(m_int(x, traj=False)["logit"]).cpu().numpy())
             if traj and i == 0:
+                o = m_traj(x, traj=True)
                 tr = (o["traj"].cpu().numpy(), torch.softmax(o["mode_logits"], -1).cpu().numpy())
     return np.mean(ps, 0), tr
 

@@ -42,9 +42,9 @@ def tables(df, order, out_dir):
     os.makedirs(out_dir, exist_ok=True)
     df.sort_values(["exp", "seed"]).to_csv(os.path.join(out_dir, "runs_raw.csv"), index=False)
     t_int = mean_std(df, INTENT, [e for e in order if e != "const_velocity"])
-    t_traj = mean_std(df, TRAJ, order)
+    t_traj = mean_std(df, TRAJ, [e for e in order if e != "majority"])
     bk = [c for c in df.columns if c.startswith("best") and c.endswith(("ade", "fde", "mse_45"))]
-    t_bk = mean_std(df, bk, order) if bk else pd.DataFrame()
+    t_bk = mean_std(df, bk, [e for e in order if e in set(df.dropna(subset=bk[:1]).exp)]) if bk else pd.DataFrame()
     for name, t in (("intent", t_int), ("trajectory", t_traj), ("trajectory_best_of_k", t_bk)):
         t.to_csv(os.path.join(out_dir, f"{name}.csv"), index=False)
         with open(os.path.join(out_dir, f"{name}.md"), "w", encoding="utf8") as f:
@@ -54,7 +54,7 @@ def tables(df, order, out_dir):
 
 def figures(df, order, runs_dir, data, groups_main, fig_dir):
     os.makedirs(fig_dir, exist_ok=True)
-    exps = [e for e in order if e in set(df.exp) and e != "const_velocity"]
+    exps = [e for e in order if e in set(df.exp) and e not in ("const_velocity", "majority")]
     fig, ax = plt.subplots(1, 2, figsize=(12, 4))
     for a, met in zip(ax, ["intent_auc", "intent_f1"]):
         m = [df[df.exp == e][met].mean() for e in exps]

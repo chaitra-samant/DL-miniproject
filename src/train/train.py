@@ -104,19 +104,31 @@ def train_one(data, spec, seed, out_dir, tcfg, dev="cuda", log=print):
     os.makedirs(out_dir, exist_ok=True)
     if spec["type"] == "const_velocity":
         return run_cv(data, out_dir)
+    if spec["type"] == "majority":   # reference: always predict the training majority class
+        yt = data["train"]["intent"]["y"]
+        p = np.full(len(data["test"]["intent"]["y"]), float(yt.mean() >= 0.5), np.float32)
+        m = dict(exp=spec["name"], seed=0, **{f"intent_{k}": float(v) for k, v in
+                                             intent_metrics(data["test"]["intent"]["y"].astype(int), p).items()})
+        json.dump(m, open(os.path.join(out_dir, "metrics.json"), "w"), indent=1)
+        return m
     set_seed(seed)
     groups = spec["groups"]
     feat_groups = sorted(set(groups) | {"ego"})        # ego is also needed by the PIEPredict-style decoder
     tr, va, te = data["train"], data["val"], data["test"]
     st = norm_stats(tr, feat_groups)
     dims = {g: tr["traj"][g].shape[-1] for g in feat_groups}
-    model = build_model(spec, dims).to(dev)
+    model = build_model(spec, dims, dropout=tcfg.get("dropout", 0.2)).to(dev)
     opt = torch.optim.AdamW(model.parameters(), lr=tcfg["lr"], weight_decay=tcfg["weight_decay"])
     yi = tr["intent"]["y"]
     pos_w = torch.tensor((len(yi) - yi.sum()) / max(yi.sum(), 1), device=dev)
     bs = tcfg["batch_size"]
     nT, nI = len(tr["traj"]["y"]), len(yi)
-    best, best_state, bad, t0 = float("inf"), None, 0, time.time()
+    # Each task keeps its own best checkpoint, selected on validation only: trajectory by val loss,
+    # intent by val AUC (ties: lower BCE). A shared criterion stopped every run at epoch 1 (intent
+    # overfits at once on JAAD's small val split while the trajectory decoder needs ~10 epochs).
+    best_t, best_i = (float("inf"), None, 0), ((-1.0, float("inf")), None, 0)
+    since_t = since_i = 0
+    t0 = time.time()
     rng = np.random.default_rng(seed)
     for ep in range(tcfg["epochs"]):
         model.train()
@@ -148,23 +160,30 @@ def train_one(data, spec, seed, out_dir, tcfg, dev="cuda", log=print):
             oi = model(to_t(va["intent"], vi, feat_groups, st, dev), traj=False)
             vl_i = F.binary_cross_entropy_with_logits(oi["logit"], torch.from_numpy(va["intent"]["y"]).to(dev),
                                                       pos_weight=pos_w).item()
-        vl = vl_t + tcfg["intent_weight"] * vl_i
-        if vl < best - 1e-4:
-            best, bad = vl, 0
-            best_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
+            v_auc = roc_auc_score(va["intent"]["y"], oi["logit"].cpu().numpy())
+        snap = lambda: {k: v.detach().clone() for k, v in model.state_dict().items()}
+        if vl_t < best_t[0] - 1e-5:
+            best_t, since_t = (vl_t, snap(), ep + 1), 0
         else:
-            bad += 1
-            if bad >= tcfg["patience"]:
-                break
-    model.load_state_dict(best_state)
-    # test
+            since_t += 1
+        if (v_auc, -vl_i) > (best_i[0][0], -best_i[0][1]):
+            best_i, since_i = ((v_auc, vl_i), snap(), ep + 1), 0
+        else:
+            since_i += 1
+        if ep + 1 >= tcfg["min_epochs"] and since_t >= tcfg["patience"] and since_i >= tcfg["patience"]:
+            break
+    # test: intent with the intent-selected weights, trajectory with the trajectory-selected weights
+    model.load_state_dict(best_i[1])
     pi_, gates, _, _ = predict(model, te["intent"], groups, st, dev, traj=False)
+    intent_state = best_i[1]
+    model.load_state_dict(best_t[1])
     _, _, tr_all, ml = predict(model, te["traj"], groups, st, dev, traj=True)
     T = te["traj"]
     wh = np.array([[m[4], m[5], m[4], m[5]] for m in T["meta"]], np.float32)
     boxes = T["last"][:, None, None, :] + tr_all / OFFSET_SCALE * wh[:, None, None, :]   # (N, K, 45, 4)
     top = boxes[np.arange(len(boxes)), ml.argmax(1)]
-    m = dict(exp=spec["name"], seed=seed, epochs=ep + 1, val_loss=best, train_sec=round(time.time() - t0, 1),
+    m = dict(exp=spec["name"], seed=seed, epochs=ep + 1, best_epoch_traj=best_t[2], best_epoch_intent=best_i[2],
+             val_traj_loss=best_t[0], val_intent_auc=best_i[0][0], train_sec=round(time.time() - t0, 1),
              **{f"intent_{k}": float(v) for k, v in intent_metrics(te["intent"]["y"].astype(int), pi_).items()},
              **traj_metrics(top, T["y"]))
     if boxes.shape[1] > 1:
@@ -175,7 +194,8 @@ def train_one(data, spec, seed, out_dir, tcfg, dev="cuda", log=print):
     np.savez_compressed(os.path.join(out_dir, "preds.npz"), intent_p=pi_,
                         gates=gates if gates is not None else np.zeros(0), traj=boxes.astype(np.float32),
                         mode_logits=ml)
-    torch.save(dict(state=model.state_dict(), spec=spec, dims=dims, norm=st), os.path.join(out_dir, "model.pt"))
+    torch.save(dict(state=model.state_dict(), intent_state=intent_state, spec=spec, dims=dims, norm=st),
+               os.path.join(out_dir, "model.pt"))
     log(f"  {spec['name']} seed {seed}: {ep + 1} epochs, AUC {m['intent_auc']:.3f}, F1 {m['intent_f1']:.3f}, "
         f"MSE@45 {m['mse_45']:.0f}, {m['train_sec']:.0f}s")
     return m

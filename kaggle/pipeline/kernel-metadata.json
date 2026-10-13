@@ -1,0 +1,15 @@
+{
+ "id": "chaitrasamant/ped-intent-pipeline-jaad",
+ "title": "ped-intent-pipeline-jaad",
+ "code_file": "pipeline_all.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "dataset_sources": [],
+ "competition_sources": [],
+ "kernel_sources": [
+  "chaitrasamant/ped-intent-jaad-download"
+ ]
+}

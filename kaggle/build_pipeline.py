@@ -4,7 +4,8 @@ The notebook carries this repo's src/ and configs/ as an embedded zip, so the Ka
 the committed code. Cells: unpack -> install -> run src.pipeline (all stages, resumable) -> show
 tables, figures, demo videos and storyboards.
 
-usage: python kaggle/build_pipeline.py [--push] [--resume-from KERNEL_SLUG ...]
+usage: python kaggle/build_pipeline.py [--push] [--slug SLUG] [--resume-from KERNEL_SLUG]
+  --resume-from attaches an earlier run; its cache/*.pkl (Stage A features) are reused, nothing else.
 """
 import base64
 import io
@@ -15,7 +16,8 @@ import sys
 import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-USER, SLUG = "chaitrasamant", "ped-intent-pipeline-jaad"
+USER = "chaitrasamant"
+SLUG = sys.argv[sys.argv.index("--slug") + 1] if "--slug" in sys.argv else "ped-intent-pipeline-jaad"
 
 buf = io.BytesIO()
 with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
@@ -97,7 +99,7 @@ json.dump(nb, open(nb_path, "w"), indent=1)
 print(f"wrote {nb_path} ({os.path.getsize(nb_path) / 1e3:.0f} kB, bundle from commit {commit})")
 
 if "--push" in sys.argv:
-    resume = sys.argv[sys.argv.index("--resume-from") + 1:] if "--resume-from" in sys.argv else []
+    resume = [sys.argv[sys.argv.index("--resume-from") + 1]] if "--resume-from" in sys.argv else []
     out = os.path.join(ROOT, "kaggle", "pipeline")
     os.makedirs(out, exist_ok=True)
     json.dump(nb, open(os.path.join(out, "pipeline_all.ipynb"), "w"), indent=1)
