@@ -22,8 +22,10 @@ for name, fid in files.items():
         log[name] = dict(ok=False, error=repr(e)[:300])
     print(name, log[name], flush=True)
     if name.endswith(".zip") and log[name].get("ok"):
+        # each zip into its own folder: both archives use the same file names (000001.mp4, ...)
         with zipfile.ZipFile(dst) as z:
-            z.extractall(os.path.join(root, "videos"))
+            print(name, "first entries:", z.namelist()[:3], "count:", len(z.namelist()), flush=True)
+            z.extractall(os.path.join(root, "videos", name[:-4]))
         os.remove(dst)
 vids = sorted(glob.glob(os.path.join(root, "videos", "**", "*.mp4"), recursive=True))
 counts = {}
