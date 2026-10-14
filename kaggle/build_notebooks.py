@@ -1,7 +1,7 @@
 """Build the Kaggle notebooks (notebooks/02_train_eval_ablate.ipynb, notebooks/03_demo.ipynb) from this repo's
 src/ and configs/ (embedded as a zip, so a run uses exactly the committed code), and optionally push one.
 
-usage: python kaggle/build_notebooks.py [--push 02|03] [--resume-from SLUG]
+usage: python kaggle/build_notebooks.py [--push 02|03] [--slug SLUG] [--resume-from SLUG] [--runs-from SLUG]
 Notebook 01 (feature extraction) is the script kernel built by kaggle/build_extract.py.
 """
 import base64
@@ -15,6 +15,9 @@ import zipfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 USER = "chaitrasamant"
 SLUGS = {"02": "accident-02-train-eval-ablate", "03": "accident-03-demo"}
+if "--slug" in sys.argv:          # e.g. a resumed training run under a new name
+    SLUGS[sys.argv[sys.argv.index("--push") + 1]] = sys.argv[sys.argv.index("--slug") + 1]
+RUNS_FROM = sys.argv[sys.argv.index("--runs-from") + 1] if "--runs-from" in sys.argv else SLUGS["02"]
 
 buf = io.BytesIO()
 with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
@@ -67,9 +70,15 @@ nb02 = [
          "                          stderr=subprocess.STDOUT) for i in range(n)]\n"
          "for p in procs: p.wait()\n"
          "for i in range(n): print(''.join(open(f'{OUT}/train_gpu{i}.log').readlines()[-15:]))"),
+    code("r = subprocess.run([sys.executable, '-m', 'src.analysis.shortcut', '--feat_dir', FEAT, '--ccd_root', CCD_ROOT,\n"
+         "                    '--dota_meta', DOTA_META, '--out', OUT + '/shortcut_probe.csv'],\n"
+         "                   cwd=CODE, env=dict(os.environ, PYTHONPATH=CODE), capture_output=True, text=True)\n"
+         "print(r.stdout[-3000:]); print(r.stderr[-2000:])"),
     code("r = subprocess.run([sys.executable, '-m', 'src.analysis.report', '--runs', OUT + '/runs', '--out', OUT + '/results'],\n"
          "                   cwd=CODE, env=dict(os.environ, PYTHONPATH=CODE), capture_output=True, text=True)\n"
          "print(r.stdout[-6000:]); print(r.stderr[-3000:])\n"
+         "import shutil\n"
+         "if os.path.exists(OUT + '/shortcut_probe.csv'): shutil.copy(OUT + '/shortcut_probe.csv', OUT + '/results/tables/')\n"
          "for f in glob.glob(OUT + '/leakage_*.json'): print(os.path.basename(f), open(f).read())"),
     md("## Results tables"),
     code("from IPython.display import Markdown, Image, display\n"
@@ -133,7 +142,7 @@ if "--push" in sys.argv:
     json.dump(nbs[which], open(os.path.join(out, fname), "w"), indent=1)
     sources = [f"{USER}/accident-stage-a", f"{USER}/accident-ccd-download", f"{USER}/accident-dota-stagnet-download"]
     if which == "03":
-        sources.append(f"{USER}/{SLUGS['02']}")
+        sources.append(f"{USER}/{RUNS_FROM}")
     json.dump({"id": f"{USER}/{SLUGS[which]}", "title": SLUGS[which], "code_file": fname, "language": "python",
                "kernel_type": "notebook", "is_private": True, "enable_gpu": which == "02", "enable_internet": True,
                "dataset_sources": [], "competition_sources": [], "kernel_sources": sources + [f"{USER}/{r}" for r in resume]},

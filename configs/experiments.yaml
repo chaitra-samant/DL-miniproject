@@ -15,6 +15,10 @@ train:
 schemes:
   comparable: [ccd_official, dota_stagnet]
   clean: [ccd_source, dota_source]
+  # ablations on DoTA only: in run 1 every model, including frame-only, reached AP ~1.0 on both CCD splits, so
+  # CCD cannot separate the ablations (see results/tables/shortcut_probe.csv). CCD ablation runs already finished
+  # are kept and reported.
+  ablation: [dota_source]
 
 experiments:
   # baselines
@@ -24,13 +28,13 @@ experiments:
   # main model: detection + segmentation context + interaction
   - {name: main,            model: risknet, groups: [app, geo, seg], interaction: graph, run_on: [comparable, clean]}
   # ablations (clean splits only)
-  - {name: main_no_interaction, model: risknet, groups: [app, geo, seg], interaction: none, run_on: [clean]}
-  - {name: main_no_app,     model: risknet, groups: [geo, seg], interaction: graph, run_on: [clean]}
-  - {name: main_no_geo,     model: risknet, groups: [app, seg], interaction: graph, run_on: [clean]}
-  - {name: main_no_frame,   model: risknet, groups: [app, geo, seg], interaction: graph, use_frame: false, run_on: [clean]}
-  - {name: main_gru,        model: risknet, groups: [app, geo, seg], interaction: graph, rnn: gru, run_on: [clean]}
-  - {name: geo_only,        model: risknet, groups: [geo], interaction: graph, run_on: [clean]}
-  - {name: geo_seg,         model: risknet, groups: [geo, seg], interaction: graph, run_on: [clean]}
+  - {name: main_no_interaction, model: risknet, groups: [app, geo, seg], interaction: none, run_on: [ablation]}
+  - {name: main_no_app,     model: risknet, groups: [geo, seg], interaction: graph, run_on: [ablation]}
+  - {name: main_no_geo,     model: risknet, groups: [app, seg], interaction: graph, run_on: [ablation]}
+  - {name: main_no_frame,   model: risknet, groups: [app, geo, seg], interaction: graph, use_frame: false, run_on: [ablation]}
+  - {name: main_gru,        model: risknet, groups: [app, geo, seg], interaction: graph, rnn: gru, run_on: [ablation]}
+  - {name: geo_only,        model: risknet, groups: [geo], interaction: graph, run_on: [ablation]}
+  - {name: geo_seg,         model: risknet, groups: [geo, seg], interaction: graph, run_on: [ablation]}
 
 # "early vs late": main vs det_graph (identical architecture without segmentation context)
 early_late:
