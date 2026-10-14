@@ -124,24 +124,33 @@ def main():
     tc = dict(cfg["train"], **json.loads(a.override))
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     data = {}
+    for ds in ("ccd", "dota"):   # leakage report from the label index only (cheap), whether or not training is needed
+        ix = loader.build_index(a.feat_dir, ds, ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
+        json.dump(loader.leakage_report(ix), open(os.path.join(a.out, f"leakage_{ds}.json"), "w"), indent=1)
     jobs = [(e, s, sp, seed) for e, s in run_list(cfg) for seed in cfg["seeds"] for sp in range(5)]
     exps = {e["name"]: e for e in cfg["experiments"]}
     jobs += [(exps[n], f"cross_{src}2{dst}", 0, seed) for src, dst in cfg["cross"]["directions"]
              for n in cfg["cross"]["experiments"] for seed in cfg["seeds"]]
+    def run_dir(e, scheme, sname, seed):
+        return os.path.join(a.out, "runs", e["name"], scheme, f"{sname}_s{seed}")
+
     k = 0
     for e, scheme, sp, seed in jobs:
-        for ds in (scheme.split("_")[1].split("2") if scheme.startswith("cross") else [scheme.split("_")[0]]):
-            if ds not in data and not (scheme.startswith("cross") and "both" in data):
-                idx = loader.build_index(a.feat_dir, ds, ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
-                arrs, _ = loader.load_all(idx)
-                data[ds] = (idx, arrs)
-                json.dump(loader.leakage_report(idx), open(os.path.join(a.out, f"leakage_{ds}.json"), "w"), indent=1)
+        # split names are fold0..fold4, "official" or "all"; skip finished runs before touching any data
+        sname_guess = "official" if scheme == "ccd_official" else ("all" if scheme.startswith("cross") else f"fold{sp}")
+        if sp > 0 and (scheme == "ccd_official" or scheme.startswith("cross")):
+            continue
+        k += 1
+        if k % a.nworkers != a.worker:
+            continue
+        if os.path.exists(os.path.join(run_dir(e, scheme, sname_guess, seed), "metrics.json")):
+            continue
         if scheme.startswith("cross"):
-            if "both" not in data:   # one concatenated copy serves both directions; per-dataset copies are freed
-                (i1, a1), (i2, a2) = data.pop("ccd"), data.pop("dota")
-                arrs = {}
-                for key in list(a1):
-                    arrs[key] = np.concatenate([a1.pop(key), a2.pop(key)])
+            if "both" not in data:   # one array for both directions, loaded from disk after freeing the others
+                data.pop("ccd", None); data.pop("dota", None)
+                i1 = loader.build_index(a.feat_dir, "ccd", ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
+                i2 = loader.build_index(a.feat_dir, "dota", ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
+                arrs, _ = loader.load_all(None, files=i1["files"] + i2["files"])
                 n1, n2 = len(i1["y"]), len(i2["y"])
                 is_ccd = np.r_[np.ones(n1, bool), np.zeros(n2, bool)]
                 idx = dict(y=np.concatenate([i1["y"], i2["y"]]), toa=np.concatenate([i1["toa"], i2["toa"]]),
@@ -151,17 +160,19 @@ def main():
                 data["both"] = (idx, arrs)
             idx, arrs = data["both"]
         else:
-            idx, arrs = data[scheme.split("_")[0]]
+            ds = scheme.split("_")[0]
+            if ds not in data:
+                idx = loader.build_index(a.feat_dir, ds, ccd_root=a.ccd_root, dota_meta_dir=a.dota_meta)
+                arrs, _ = loader.load_all(idx)
+                data[ds] = (idx, arrs)
+                print(f"loaded {ds}: {len(idx['y'])} videos", flush=True)
+            idx, arrs = data[ds]
         splits = idx["schemes"][scheme]
         if sp >= len(splits):
             continue
-        k += 1
-        if k % a.nworkers != a.worker:
-            continue
         sname, tr, te = splits[sp]
-        d = os.path.join(a.out, "runs", e["name"], scheme, f"{sname}_s{seed}")
-        if os.path.exists(os.path.join(d, "metrics.json")):
-            continue
+        assert sname == sname_guess, (sname, sname_guess)
+        d = run_dir(e, scheme, sname, seed)
         if time.time() - t_start > a.budget_h * 3600:
             print("budget reached; remaining runs are left for a rerun", flush=True)
             break
