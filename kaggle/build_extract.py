@@ -119,9 +119,7 @@ json.dump({"id": f"{USER}/{SLUG}", "title": SLUG, "code_file": "stage_a.py", "la
            "kernel_sources": [f"{USER}/accident-ccd-download", f"{USER}/accident-dota-stagnet-download"]
                              + [f"{USER}/{r}" for r in resume]},
           open(os.path.join(out, "kernel-metadata.json"), "w"), indent=1)
-nb = {"cells": [{"cell_type": "markdown", "metadata": {}, "source": "# 01 Extract features (Stage A)
-
-YOLO11m + ByteTrack, "
+nb = {"cells": [{"cell_type": "markdown", "metadata": {}, "source": "# 01 Extract features (Stage A)\n\nYOLO11m + ByteTrack, "
                  "SegFormer-B2 (Cityscapes) road context and DINOv2-small embeddings for every frame of CCD and DoTA. "
                  f"Generated from repo commit `{commit}`; identical to the script kernel `{SLUG}`."},
                 {"cell_type": "code", "metadata": {}, "execution_count": None, "outputs": [], "source": script}],
