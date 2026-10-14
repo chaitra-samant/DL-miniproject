@@ -1,6 +1,6 @@
 {
- "id": "chaitrasamant/accident-02-train-eval-ablate",
- "title": "accident-02-train-eval-ablate",
+ "id": "chaitrasamant/accident-02b-train-eval-ablate",
+ "title": "accident-02b-train-eval-ablate",
  "code_file": "02_train_eval_ablate.ipynb",
  "language": "python",
  "kernel_type": "notebook",
@@ -12,6 +12,7 @@
  "kernel_sources": [
   "chaitrasamant/accident-stage-a",
   "chaitrasamant/accident-ccd-download",
-  "chaitrasamant/accident-dota-stagnet-download"
+  "chaitrasamant/accident-dota-stagnet-download",
+  "chaitrasamant/accident-02-train-eval-ablate"
  ]
 }
