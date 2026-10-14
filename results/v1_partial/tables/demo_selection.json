@@ -1,0 +1,37 @@
+{
+ "rule": {
+  "top_k_earlier": 2,
+  "false_alarms": 1,
+  "misses": 1
+ },
+ "clips": [
+  {
+   "kind": "earlier warning",
+   "vid": "dota_pos_UOjQsfDXjO0_004067",
+   "scheme": "dota_source",
+   "split": "fold1",
+   "margin_s": 3.0
+  },
+  {
+   "kind": "earlier warning",
+   "vid": "dota_pos_gDjeTHGWX9c_003096",
+   "scheme": "dota_source",
+   "split": "fold3",
+   "margin_s": 2.1
+  },
+  {
+   "kind": "false alarm",
+   "vid": "ccd_neg_001246",
+   "scheme": "ccd_source",
+   "split": "fold3",
+   "maxp": 0.8779296875
+  },
+  {
+   "kind": "miss",
+   "vid": "ccd_pos_000397",
+   "scheme": "ccd_source",
+   "split": "fold4",
+   "maxp": 0.0141830444335937
+  }
+ ]
+}

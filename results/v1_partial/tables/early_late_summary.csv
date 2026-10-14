@@ -1,0 +1,3 @@
+scheme,baseline earlier (mean),baseline earlier (std),both miss (mean),both miss (std),main earlier (mean),main earlier (std),only baseline warns (mean),only baseline warns (std),only main warns (mean),only main warns (std),same time (mean),same time (std)
+ccd_source,0.028,0.021,0.001,0.001,0.026,0.013,0.001,0.0,0.001,0.001,0.943,0.009
+dota_source,0.209,0.044,0.123,0.025,0.254,0.055,0.062,0.009,0.071,0.006,0.281,0.033
