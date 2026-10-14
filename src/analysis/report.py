@@ -176,6 +176,9 @@ def main():
     os.makedirs(tdir, exist_ok=True); os.makedirs(fdir, exist_ok=True)
     df = load_runs(a.runs)
     df.to_csv(os.path.join(tdir, "runs_raw.csv"), index=False)
+    if df.empty:
+        print("no finished runs found in", a.runs)
+        return
     summ = summarise(df)
     summ.to_csv(os.path.join(tdir, "summary_all.csv"), index=False)
     base = ["frame_lstm", "det_lstm", "det_graph", "main"]
