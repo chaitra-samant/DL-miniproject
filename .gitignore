@@ -19,3 +19,6 @@ papers/
 scratch_hf/
 *.safetensors
 *.bin
+
+# demo clips are small and part of the deliverable
+!results/demo/*.mp4

@@ -1,0 +1,30 @@
+[
+ {
+  "tag": "earlier_warning_dota_pos_UOjQsfDXjO0_004067",
+  "main": "warned 3.5 s before the accident",
+  "baseline": "warned 0.5 s before the accident",
+  "toa": 40,
+  "y": 1
+ },
+ {
+  "tag": "earlier_warning_dota_pos_gDjeTHGWX9c_003096",
+  "main": "warned 2.7 s before the accident",
+  "baseline": "warned 0.6 s before the accident",
+  "toa": 30,
+  "y": 1
+ },
+ {
+  "tag": "false_alarm_ccd_neg_001246",
+  "main": "FALSE ALARM at 4.4 s",
+  "baseline": "no alarm (correct: no accident)",
+  "toa": 50,
+  "y": 0
+ },
+ {
+  "tag": "miss_ccd_pos_000397",
+  "main": "no warning before the accident",
+  "baseline": "warned 1.1 s before the accident",
+  "toa": 42,
+  "y": 1
+ }
+]
