@@ -1,0 +1,6 @@
+y,kind,mean,std
+0,correct rejection,0.999,0.001
+0,false alarm,0.001,0.001
+1,late (< 0.5 s),0.001,
+1,miss,0.002,0.001
+1,timely,0.998,0.0

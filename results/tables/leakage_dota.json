@@ -1,0 +1,66 @@
+{
+ "dota_stagnet / shared clip": {
+  "test_videos": [
+   298,
+   298,
+   298,
+   298,
+   298
+  ],
+  "shared": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "dota_stagnet / shared source": {
+  "test_videos": [
+   298,
+   298,
+   298,
+   298,
+   298
+  ],
+  "shared": [
+   295,
+   297,
+   295,
+   295,
+   294
+  ]
+ },
+ "dota_source / shared clip": {
+  "test_videos": [
+   298,
+   298,
+   298,
+   298,
+   298
+  ],
+  "shared": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "dota_source / shared source": {
+  "test_videos": [
+   298,
+   298,
+   298,
+   298,
+   298
+  ],
+  "shared": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ }
+}

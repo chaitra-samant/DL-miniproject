@@ -1,0 +1,7 @@
+dataset,probe,roc_auc,videos,positives,min_toa_frames
+ccd,first_frame_emb,1.0,4500,1500,30
+ccd,first10_frame_emb,1.0,4500,1500,30
+ccd,n_objects_first10,0.6263,4500,1500,30
+dota,first_frame_emb,0.809,1490,745,1
+dota,first10_frame_emb,0.8107,1490,745,1
+dota,n_objects_first10,0.5451,1490,745,1
