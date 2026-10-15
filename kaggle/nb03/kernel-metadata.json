@@ -1,0 +1,18 @@
+{
+ "id": "chaitrasamant/accident-03-demo",
+ "title": "accident-03-demo",
+ "code_file": "03_demo.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [],
+ "competition_sources": [],
+ "kernel_sources": [
+  "chaitrasamant/accident-stage-a",
+  "chaitrasamant/accident-ccd-download",
+  "chaitrasamant/accident-dota-stagnet-download",
+  "chaitrasamant/accident-02c-train-eval-ablate"
+ ]
+}
